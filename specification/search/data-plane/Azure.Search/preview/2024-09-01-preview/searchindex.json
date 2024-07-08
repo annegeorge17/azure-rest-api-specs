@@ -35,7 +35,7 @@
         ],
         "operationId": "Documents_Count",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/Count-Documents"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/Count-Documents"
         },
         "x-ms-examples": {
           "SearchIndexCountDocuments": {
@@ -76,11 +76,14 @@
         ],
         "operationId": "Documents_SearchGet",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/Search-Documents"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/Search-Documents"
         },
         "x-ms-examples": {
           "SearchIndexSearchDocumentsGet": {
             "$ref": "./examples/SearchIndexSearchDocumentsGet.json"
+          },
+          "SearchIndexSearchDocumentsSemanticGet": {
+            "$ref": "./examples/SearchIndexSearchDocumentsSemanticGet.json"
           }
         },
         "description": "Searches for documents in the index.",
@@ -480,7 +483,8 @@
             "type": "string",
             "enum": [
               "disabled",
-              "semantic"
+              "semantic",
+              "vector"
             ],
             "x-ms-enum": {
               "name": "QueryDebugMode",
@@ -495,6 +499,11 @@
                   "value": "semantic",
                   "name": "Semantic",
                   "description": "Allows the user to further explore their reranked results."
+                },
+                {
+                  "value": "vector",
+                  "name": "Vector",
+                  "description": "Allows the user to further explore their hybrid and vector query results."
                 }
               ]
             },
@@ -598,11 +607,14 @@
         ],
         "operationId": "Documents_SearchPost",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/Search-Documents"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/Search-Documents"
         },
         "x-ms-examples": {
           "SearchIndexSearchDocumentsPost": {
             "$ref": "./examples/SearchIndexSearchDocumentsPost.json"
+          },
+          "SearchIndexSearchDocumentsSemanticPost": {
+            "$ref": "./examples/SearchIndexSearchDocumentsSemanticPost.json"
           }
         },
         "description": "Searches for documents in the index.",
@@ -648,7 +660,7 @@
         ],
         "operationId": "Documents_Get",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/lookup-document"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/lookup-document"
         },
         "x-ms-examples": {
           "SearchIndexGetDocument": {
@@ -704,7 +716,7 @@
         ],
         "operationId": "Documents_SuggestGet",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/suggestions"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/suggestions"
         },
         "x-ms-examples": {
           "SearchIndexSuggestDocumentsGet": {
@@ -854,7 +866,7 @@
         ],
         "operationId": "Documents_SuggestPost",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/suggestions"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/suggestions"
         },
         "x-ms-examples": {
           "SearchIndexSuggestDocumentsPost": {
@@ -903,7 +915,7 @@
         ],
         "operationId": "Documents_Index",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/addupdate-or-delete-documents"
         },
         "x-ms-examples": {
           "SearchIndexIndexDocuments": {
@@ -958,7 +970,7 @@
         ],
         "operationId": "Documents_AutocompleteGet",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/autocomplete"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/autocomplete"
         },
         "x-ms-examples": {
           "SearchIndexAutocompleteDocumentsGet": {
@@ -1118,7 +1130,7 @@
         ],
         "operationId": "Documents_AutocompletePost",
         "externalDocs": {
-          "url": "https://docs.microsoft.com/rest/api/searchservice/autocomplete"
+          "url": "https://learn.microsoft.com/rest/api/searchservice/autocomplete"
         },
         "x-ms-examples": {
           "SearchIndexAutocompleteDocumentsPost": {
@@ -1213,216 +1225,6 @@
       "additionalProperties": true,
       "description": "A single bucket of a facet query result. Reports the number of documents with a field value falling within a particular range or having a particular value or interval."
     },
-    "AnswerResult": {
-      "x-ms-client-name": "QueryAnswerResult",
-      "properties": {
-        "score": {
-          "type": "number",
-          "format": "double",
-          "readOnly": true,
-          "description": "The score value represents how relevant the answer is to the query relative to other answers returned for the query."
-        },
-        "key": {
-          "type": "string",
-          "readOnly": true,
-          "description": "The key of the document the answer was extracted from."
-        },
-        "text": {
-          "type": "string",
-          "readOnly": true,
-          "description": "The text passage extracted from the document contents as the answer."
-        },
-        "highlights": {
-          "type": "string",
-          "readOnly": true,
-          "x-nullable": true,
-          "description": "Same text passage as in the Text property with highlighted text phrases most relevant to the query."
-        }
-      },
-      "additionalProperties": true,
-      "description": "An answer is a text passage extracted from the contents of the most relevant documents that matched the query. Answers are extracted from the top search results. Answer candidates are scored and the top answers are selected."
-    },
-    "CaptionResult": {
-      "x-ms-client-name": "QueryCaptionResult",
-      "properties": {
-        "text": {
-          "type": "string",
-          "readOnly": true,
-          "description": "A representative text passage extracted from the document most relevant to the search query."
-        },
-        "highlights": {
-          "type": "string",
-          "readOnly": true,
-          "x-nullable": true,
-          "description": "Same text passage as in the Text property with highlighted phrases most relevant to the query."
-        }
-      },
-      "additionalProperties": true,
-      "description": "Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type 'semantic'.."
-    },
-    "SemanticPartialResponseReason": {
-      "type": "string",
-      "enum": [
-        "maxWaitExceeded",
-        "capacityOverloaded",
-        "transient"
-      ],
-      "x-ms-enum": {
-        "name": "SemanticErrorReason",
-        "modelAsString": true,
-        "values": [
-          {
-            "value": "maxWaitExceeded",
-            "name": "MaxWaitExceeded",
-            "description": "If 'semanticMaxWaitInMilliseconds' was set and the semantic processing duration exceeded that value. Only the base results were returned."
-          },
-          {
-            "value": "capacityOverloaded",
-            "name": "CapacityOverloaded",
-            "description": "The request was throttled. Only the base results were returned."
-          },
-          {
-            "value": "transient",
-            "name": "Transient",
-            "description": "At least one step of the semantic process failed."
-          }
-        ]
-      },
-      "description": "Reason that a partial response was returned for a semantic ranking request."
-    },
-    "SemanticPartialResponseType": {
-      "type": "string",
-      "enum": [
-        "baseResults",
-        "rerankedResults"
-      ],
-      "x-ms-enum": {
-        "name": "SemanticSearchResultsType",
-        "modelAsString": true,
-        "values": [
-          {
-            "value": "baseResults",
-            "name": "BaseResults",
-            "description": "Results without any semantic enrichment or reranking."
-          },
-          {
-            "value": "rerankedResults",
-            "name": "RerankedResults",
-            "description": "Results have been reranked with the reranker model and will include semantic captions. They will not include any answers, answers highlights or caption highlights."
-          }
-        ]
-      },
-      "description": "Type of partial response that was returned for a semantic ranking request."
-    },
-    "DocumentDebugInfo": {
-      "type": "object",
-      "properties": {
-        "semantic": {
-          "$ref": "#/definitions/SemanticDebugInfo",
-          "readOnly": true,
-          "description": "Contains debugging information specific to semantic ranking requests."
-        }
-      },
-      "description": "Contains debugging information that can be used to further explore your search results."
-    },
-    "SemanticDebugInfo": {
-      "type": "object",
-      "properties": {
-        "titleField": {
-          "$ref": "#/definitions/QueryResultDocumentSemanticField",
-          "readOnly": true,
-          "description": "The title field that was sent to the semantic enrichment process, as well as how it was used"
-        },
-        "contentFields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/QueryResultDocumentSemanticField"
-          },
-          "readOnly": true,
-          "description": "The content fields that were sent to the semantic enrichment process, as well as how they were used"
-        },
-        "keywordFields": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/QueryResultDocumentSemanticField"
-          },
-          "readOnly": true,
-          "description": "The keyword fields that were sent to the semantic enrichment process, as well as how they were used"
-        },
-        "rerankerInput": {
-          "$ref": "#/definitions/QueryResultDocumentRerankerInput",
-          "readOnly": true,
-          "description": "The raw concatenated strings that were sent to the semantic enrichment process."
-        }
-      }
-    },
-    "QueryResultDocumentSemanticField": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "readOnly": true,
-          "description": "The name of the field that was sent to the semantic enrichment process"
-        },
-        "state": {
-          "$ref": "#/definitions/QueryResultDocumentSemanticFieldState",
-          "readOnly": true,
-          "description": "The way the field was used for the semantic enrichment process (fully used, partially used, or unused)"
-        }
-      },
-      "description": "Description of fields that were sent to the semantic enrichment process, as well as how they were used"
-    },
-    "QueryResultDocumentSemanticFieldState": {
-      "type": "string",
-      "enum": [
-        "used",
-        "unused",
-        "partial"
-      ],
-      "x-ms-enum": {
-        "name": "SemanticFieldState",
-        "modelAsString": true,
-        "values": [
-          {
-            "value": "used",
-            "name": "Used",
-            "description": "The field was fully used for semantic enrichment."
-          },
-          {
-            "value": "unused",
-            "name": "Unused",
-            "description": "The field was not used for semantic enrichment."
-          },
-          {
-            "value": "partial",
-            "name": "Partial",
-            "description": "The field was partially used for semantic enrichment."
-          }
-        ]
-      },
-      "description": "The way the field was used for the semantic enrichment process."
-    },
-    "QueryResultDocumentRerankerInput": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string",
-          "readOnly": true,
-          "description": "The raw string for the title field that was used for semantic enrichment."
-        },
-        "content": {
-          "type": "string",
-          "readOnly": true,
-          "description": "The raw concatenated strings for the content fields that were used for semantic enrichment."
-        },
-        "keywords": {
-          "type": "string",
-          "readOnly": true,
-          "description": "The raw concatenated strings for the keyword fields that were used for semantic enrichment."
-        }
-      },
-      "description": "The raw concatenated strings that were sent to the semantic enrichment process."
-    },
     "SearchDocumentsResult": {
       "properties": {
         "@odata.count": {
@@ -1467,18 +1269,6 @@
           "x-ms-client-name": "NextPageParameters",
           "description": "Continuation JSON payload returned when the query can't return all the requested results in a single response. You can use this JSON along with @odata.nextLink to formulate another POST Search request to get the next part of the search response."
         },
-        "@search.semanticPartialResponseReason": {
-          "$ref": "#/definitions/SemanticPartialResponseReason",
-          "readOnly": true,
-          "x-ms-client-name": "SemanticPartialResponseReason",
-          "description": "Reason that a partial response was returned for a semantic ranking request."
-        },
-        "@search.semanticPartialResponseType": {
-          "$ref": "#/definitions/SemanticPartialResponseType",
-          "readOnly": true,
-          "x-ms-client-name": "SemanticPartialResponseType",
-          "description": "Type of partial response that was returned for a semantic ranking request."
-        },
         "value": {
           "type": "array",
           "items": {
@@ -1493,6 +1283,18 @@
           "readOnly": true,
           "x-ms-client-name": "NextLink",
           "description": "Continuation URL returned when the query can't return all the requested results in a single response. You can use this URL to formulate another GET or POST Search request to get the next part of the search response. Make sure to use the same verb (GET or POST) as the request that produced this response."
+        },
+        "@search.semanticPartialResponseReason": {
+          "$ref": "#/definitions/SemanticPartialResponseReason",
+          "readOnly": true,
+          "x-ms-client-name": "SemanticPartialResponseReason",
+          "description": "Reason that a partial response was returned for a semantic ranking request."
+        },
+        "@search.semanticPartialResponseType": {
+          "$ref": "#/definitions/SemanticPartialResponseType",
+          "readOnly": true,
+          "x-ms-client-name": "SemanticPartialResponseType",
+          "description": "Type of partial response that was returned for a semantic ranking request."
         }
       },
       "required": [
@@ -1673,30 +1475,6 @@
       ],
       "description": "Response containing the status of operations for all documents in the indexing request."
     },
-    "SemanticErrorHandling": {
-      "type": "string",
-      "enum": [
-        "partial",
-        "fail"
-      ],
-      "x-ms-enum": {
-        "name": "SemanticErrorMode",
-        "modelAsString": true,
-        "values": [
-          {
-            "value": "partial",
-            "name": "Partial",
-            "description": "If the semantic processing fails, partial results still return. The definition of partial results depends on what semantic step failed and what was the reason for failure."
-          },
-          {
-            "value": "fail",
-            "name": "Fail",
-            "description": "If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error."
-          }
-        ]
-      },
-      "description": "Allows the user to choose whether a semantic call should fail completely, or to return partial results."
-    },
     "QueryDebugMode": {
       "type": "string",
       "enum": [
@@ -1799,54 +1577,6 @@
       },
       "description": "Improve search recall by spell-correcting individual search query terms."
     },
-    "Answers": {
-      "type": "string",
-      "enum": [
-        "none",
-        "extractive"
-      ],
-      "x-ms-enum": {
-        "name": "QueryAnswerType",
-        "modelAsString": true,
-        "values": [
-          {
-            "value": "none",
-            "name": "None",
-            "description": "Do not return answers for the query."
-          },
-          {
-            "value": "extractive",
-            "name": "Extractive",
-            "description": "Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language."
-          }
-        ]
-      },
-      "description": "This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-<number of answers>` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-<confidence threshold>` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7."
-    },
-    "Captions": {
-      "type": "string",
-      "enum": [
-        "none",
-        "extractive"
-      ],
-      "x-ms-enum": {
-        "name": "QueryCaptionType",
-        "modelAsString": true,
-        "values": [
-          {
-            "value": "none",
-            "name": "None",
-            "description": "Do not return captions for the query."
-          },
-          {
-            "value": "extractive",
-            "name": "Extractive",
-            "description": "Extracts captions from the matching documents that contain passages relevant to the search query."
-          }
-        ]
-      },
-      "description": "This parameter is only valid if the query type is `semantic`. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to `extractive`, highlighting is enabled by default, and can be configured by appending the pipe character `|` followed by the `highlight-<true/false>` option, such as `extractive|highlight-true`. Defaults to `None`."
-    },
     "VectorQuery": {
       "type": "object",
       "discriminator": "kind",
@@ -1882,6 +1612,10 @@
         "threshold": {
           "$ref": "#/definitions/VectorThreshold",
           "description": "The threshold used for vector queries. Note this can only be set if all 'fields' use the same similarity metric."
+        },
+        "filter": {
+          "type": "string",
+          "description":  "The OData filter expression to apply to this specific vector query. If no filter expression is defined at the vector level, the expression defined in the top level filter parameter is used instead."
         }
       },
       "required": [
@@ -1891,6 +1625,7 @@
     },
     "RawVectorQuery": {
       "type": "object",
+      "x-ms-client-name": "VectorizedQuery",
       "x-ms-discriminator-value": "vector",
       "allOf": [
         {
@@ -2648,7 +2383,7 @@
         },
         "facets": {
           "externalDocs": {
-            "url": "https://docs.microsoft.com/rest/api/searchservice/Search-Documents"
+            "url": "https://learn.microsoft.com/rest/api/searchservice/Search-Documents"
           },
           "type": "array",
           "items": {
@@ -2658,7 +2393,7 @@
         },
         "filter": {
           "externalDocs": {
-            "url": "https://docs.microsoft.com/rest/api/searchservice/OData-Expression-Syntax-for-Azure-Search"
+            "url": "https://learn.microsoft.com/rest/api/searchservice/OData-Expression-Syntax-for-Azure-Search"
           },
           "type": "string",
           "description": "The OData $filter expression to apply to the search query."
@@ -2709,25 +2444,6 @@
           "type": "string",
           "description": "The name of a scoring profile to evaluate match scores for matching documents in order to sort the results."
         },
-        "semanticQuery": {
-          "type": "string",
-          "description": "Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase."
-        },
-        "semanticConfiguration": {
-          "type": "string",
-          "description": "The name of a semantic configuration that will be used when processing documents for queries of type semantic."
-        },
-        "semanticErrorHandling": {
-          "$ref": "#/definitions/SemanticErrorHandling",
-          "description": "Allows the user to choose whether a semantic call should fail completely, or to return partial results (default)."
-        },
-        "semanticMaxWaitInMilliseconds": {
-          "type": "integer",
-          "format": "int32",
-          "x-nullable": true,
-          "minimum": 700,
-          "description": "Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails."
-        },
         "debug": {
           "$ref": "#/definitions/QueryDebugMode",
           "description": "Enables a debugging tool that can be used to further explore your reranked results."
@@ -2753,10 +2469,6 @@
           "$ref": "#/definitions/Speller",
           "description": "A value that specified the type of the speller to use to spell-correct individual search query terms."
         },
-        "answers": {
-          "$ref": "#/definitions/Answers",
-          "description": "A value that specifies whether answers should be returned as part of the search response."
-        },
         "select": {
           "type": "string",
           "description": "The comma-separated list of fields to retrieve. If unspecified, all fields marked as retrievable in the schema are included."
@@ -2770,6 +2482,29 @@
           "type": "integer",
           "format": "int32",
           "description": "The number of search results to retrieve. This can be used in conjunction with $skip to implement client-side paging of search results. If results are truncated due to server-side paging, the response will include a continuation token that can be used to issue another Search request for the next page of results."
+        },
+        "semanticConfiguration": {
+          "type": "string",
+          "description": "The name of a semantic configuration that will be used when processing documents for queries of type semantic."
+        },
+        "semanticErrorHandling": {
+          "$ref": "#/definitions/SemanticErrorHandling",
+          "description": "Allows the user to choose whether a semantic call should fail completely (default / current behavior), or to return partial results."
+        },
+        "semanticMaxWaitInMilliseconds": {
+          "type": "integer",
+          "format": "int32",
+          "x-nullable": true,
+          "minimum": 700,
+          "description": "Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails."
+        },
+        "semanticQuery": {
+          "type": "string",
+          "description": "Allows setting a separate search query that will be solely used for semantic reranking, semantic captions and semantic answers. Is useful for scenarios where there is a need to use different queries between the base retrieval and ranking phase, and the L2 semantic phase."
+        },
+        "answers": {
+          "$ref": "#/definitions/Answers",
+          "description": "A value that specifies whether answers should be returned as part of the search response."
         },
         "captions": {
           "$ref": "#/definitions/Captions",
@@ -2788,13 +2523,10 @@
         },
         "vectorFilterMode": {
           "$ref": "#/definitions/VectorFilterMode",
-          "description": "Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter'."
+          "description": "Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes."
         },
         "hybridSearch": {
-          "type": "object",
-          "items": {
-            "$ref": "#/definitions/HybridSearch"
-          },
+          "$ref": "#/definitions/HybridSearch",
           "description": "The query parameters to configure hybrid search behaviors."
         }
       },
@@ -2804,7 +2536,7 @@
       "properties": {
         "filter": {
           "externalDocs": {
-            "url": "https://docs.microsoft.com/rest/api/searchservice/OData-Expression-Syntax-for-Azure-Search"
+            "url": "https://learn.microsoft.com/rest/api/searchservice/OData-Expression-Syntax-for-Azure-Search"
           },
           "type": "string",
           "description": "An OData expression that filters the documents considered for suggestions."
@@ -2874,7 +2606,7 @@
         },
         "filter": {
           "externalDocs": {
-            "url": "https://docs.microsoft.com/rest/api/searchservice/OData-Expression-Syntax-for-Azure-Search"
+            "url": "https://learn.microsoft.com/rest/api/searchservice/OData-Expression-Syntax-for-Azure-Search"
           },
           "type": "string",
           "description": "An OData expression that filters the documents used to produce completed terms for the Autocomplete result."
@@ -2959,6 +2691,369 @@
         "queryPlusText"
       ],
       "description": "The result of Autocomplete requests."
+    },
+    "AnswerResult": {
+      "x-ms-client-name": "QueryAnswerResult",
+      "properties": {
+        "score": {
+          "type": "number",
+          "format": "double",
+          "readOnly": true,
+          "description": "The score value represents how relevant the answer is to the query relative to other answers returned for the query."
+        },
+        "key": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The key of the document the answer was extracted from."
+        },
+        "text": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The text passage extracted from the document contents as the answer."
+        },
+        "highlights": {
+          "type": "string",
+          "readOnly": true,
+          "x-nullable": true,
+          "description": "Same text passage as in the Text property with highlighted text phrases most relevant to the query."
+        }
+      },
+      "additionalProperties": true,
+      "description": "An answer is a text passage extracted from the contents of the most relevant documents that matched the query. Answers are extracted from the top search results. Answer candidates are scored and the top answers are selected."
+    },
+    "CaptionResult": {
+      "x-ms-client-name": "QueryCaptionResult",
+      "properties": {
+        "text": {
+          "type": "string",
+          "readOnly": true,
+          "description": "A representative text passage extracted from the document most relevant to the search query."
+        },
+        "highlights": {
+          "type": "string",
+          "readOnly": true,
+          "x-nullable": true,
+          "description": "Same text passage as in the Text property with highlighted phrases most relevant to the query."
+        }
+      },
+      "additionalProperties": true,
+      "description": "Captions are the most representative passages from the document relatively to the search query. They are often used as document summary. Captions are only returned for queries of type `semantic`."
+    },
+    "SemanticPartialResponseReason": {
+      "type": "string",
+      "enum": [
+        "maxWaitExceeded",
+        "capacityOverloaded",
+        "transient"
+      ],
+      "x-ms-enum": {
+        "name": "SemanticErrorReason",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "maxWaitExceeded",
+            "name": "MaxWaitExceeded",
+            "description": "If `semanticMaxWaitInMilliseconds` was set and the semantic processing duration exceeded that value. Only the base results were returned."
+          },
+          {
+            "value": "capacityOverloaded",
+            "name": "CapacityOverloaded",
+            "description": "The request was throttled. Only the base results were returned."
+          },
+          {
+            "value": "transient",
+            "name": "Transient",
+            "description": "At least one step of the semantic process failed."
+          }
+        ]
+      },
+      "description": "Reason that a partial response was returned for a semantic ranking request."
+    },
+    "SemanticPartialResponseType": {
+      "type": "string",
+      "enum": [
+        "baseResults",
+        "rerankedResults"
+      ],
+      "x-ms-enum": {
+        "name": "SemanticSearchResultsType",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "baseResults",
+            "name": "BaseResults",
+            "description": "Results without any semantic enrichment or reranking."
+          },
+          {
+            "value": "rerankedResults",
+            "name": "RerankedResults",
+            "description": "Results have been reranked with the reranker model and will include semantic captions. They will not include any answers, answers highlights or caption highlights."
+          }
+        ]
+      },
+      "description": "Type of partial response that was returned for a semantic ranking request."
+    },
+    "SemanticErrorHandling": {
+      "type": "string",
+      "enum": [
+        "partial",
+        "fail"
+      ],
+      "x-ms-enum": {
+        "name": "SemanticErrorMode",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "partial",
+            "name": "Partial",
+            "description": "If the semantic processing fails, partial results still return. The definition of partial results depends on what semantic step failed and what was the reason for failure."
+          },
+          {
+            "value": "fail",
+            "name": "Fail",
+            "description": "If there is an exception during the semantic processing step, the query will fail and return the appropriate HTTP code depending on the error."
+          }
+        ]
+      },
+      "description": "Allows the user to choose whether a semantic call should fail completely, or to return partial results."
+    },
+    "Answers": {
+      "type": "string",
+      "enum": [
+        "none",
+        "extractive"
+      ],
+      "x-ms-enum": {
+        "name": "QueryAnswerType",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "none",
+            "name": "None",
+            "description": "Do not return answers for the query."
+          },
+          {
+            "value": "extractive",
+            "name": "Extractive",
+            "description": "Extracts answer candidates from the contents of the documents returned in response to a query expressed as a question in natural language."
+          }
+        ]
+      },
+      "description": "This parameter is only valid if the query type is `semantic`. If set, the query returns answers extracted from key passages in the highest ranked documents. The number of answers returned can be configured by appending the pipe character `|` followed by the `count-<number of answers>` option after the answers parameter value, such as `extractive|count-3`. Default count is 1. The confidence threshold can be configured by appending the pipe character `|` followed by the `threshold-<confidence threshold>` option after the answers parameter value, such as `extractive|threshold-0.9`. Default threshold is 0.7."
+    },
+    "Captions": {
+      "type": "string",
+      "enum": [
+        "none",
+        "extractive"
+      ],
+      "x-ms-enum": {
+        "name": "QueryCaptionType",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "none",
+            "name": "None",
+            "description": "Do not return captions for the query."
+          },
+          {
+            "value": "extractive",
+            "name": "Extractive",
+            "description": "Extracts captions from the matching documents that contain passages relevant to the search query."
+          }
+        ]
+      },
+      "description": "This parameter is only valid if the query type is `semantic`. If set, the query returns captions extracted from key passages in the highest ranked documents. When Captions is set to `extractive`, highlighting is enabled by default, and can be configured by appending the pipe character `|` followed by the `highlight-<true/false>` option, such as `extractive|highlight-true`. Defaults to `None`."
+    },
+    "DocumentDebugInfo": {
+      "type": "object",
+      "properties": {
+        "semantic": {
+          "$ref": "#/definitions/SemanticDebugInfo",
+          "readOnly": true,
+          "description": "Contains debugging information specific to semantic ranking requests."
+        },
+        "vectors": {
+          "$ref": "#/definitions/VectorsDebugInfo",
+          "readOnly": true,
+          "description": "Contains debugging information specific to vector and hybrid search."
+        }
+      },
+      "description": "Contains debugging information that can be used to further explore your search results."
+    },
+    "SemanticDebugInfo": {
+      "type": "object",
+      "properties": {
+        "titleField": {
+          "$ref": "#/definitions/QueryResultDocumentSemanticField",
+          "readOnly": true,
+          "description": "The title field that was sent to the semantic enrichment process, as well as how it was used"
+        },
+        "contentFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryResultDocumentSemanticField"
+          },
+          "readOnly": true,
+          "description": "The content fields that were sent to the semantic enrichment process, as well as how they were used"
+        },
+        "keywordFields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryResultDocumentSemanticField"
+          },
+          "readOnly": true,
+          "description": "The keyword fields that were sent to the semantic enrichment process, as well as how they were used"
+        },
+        "rerankerInput": {
+          "$ref": "#/definitions/QueryResultDocumentRerankerInput",
+          "readOnly": true,
+          "description": "The raw concatenated strings that were sent to the semantic enrichment process."
+        }
+      }
+    },
+    "QueryResultDocumentSemanticField": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The name of the field that was sent to the semantic enrichment process"
+        },
+        "state": {
+          "$ref": "#/definitions/QueryResultDocumentSemanticFieldState",
+          "readOnly": true,
+          "description": "The way the field was used for the semantic enrichment process (fully used, partially used, or unused)"
+        }
+      },
+      "description": "Description of fields that were sent to the semantic enrichment process, as well as how they were used"
+    },
+    "QueryResultDocumentSemanticFieldState": {
+      "type": "string",
+      "enum": [
+        "used",
+        "unused",
+        "partial"
+      ],
+      "x-ms-enum": {
+        "name": "SemanticFieldState",
+        "modelAsString": true,
+        "values": [
+          {
+            "value": "used",
+            "name": "Used",
+            "description": "The field was fully used for semantic enrichment."
+          },
+          {
+            "value": "unused",
+            "name": "Unused",
+            "description": "The field was not used for semantic enrichment."
+          },
+          {
+            "value": "partial",
+            "name": "Partial",
+            "description": "The field was partially used for semantic enrichment."
+          }
+        ]
+      },
+      "description": "The way the field was used for the semantic enrichment process."
+    },
+    "QueryResultDocumentRerankerInput": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The raw string for the title field that was used for semantic enrichment."
+        },
+        "content": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The raw concatenated strings for the content fields that were used for semantic enrichment."
+        },
+        "keywords": {
+          "type": "string",
+          "readOnly": true,
+          "description": "The raw concatenated strings for the keyword fields that were used for semantic enrichment."
+        }
+      },
+      "description": "The raw concatenated strings that were sent to the semantic enrichment process."
+    },
+    "VectorsDebugInfo": {
+      "type": "object",
+      "properties": {
+        "subscores": {
+          "$ref": "#/definitions/QueryResultDocumentSubscores",
+          "readOnly": true,
+          "description": "The breakdown of subscores of the document prior to the chosen result set fusion/combination method such as RRF."
+        }
+      }
+    },
+    "QueryResultDocumentSubscores": {
+      "type": "object",
+      "properties": {
+        "text": {
+          "$ref": "#/definitions/TextResult",
+          "readOnly": true,
+          "description": "The BM25 or Classic score for the text portion of the query."
+        },
+        "vectors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/QueryResultDocumentVectorSubscores"
+          },
+          "readOnly": true,
+          "description": "The vector similarity and @search.score values for each vector query."
+        },
+        "documentBoost": {
+          "type": "number",
+          "format": "double",
+          "readOnly": true,
+          "description": "The BM25 or Classic score for the text portion of the query."
+        }
+      },
+      "description": "The breakdown of subscores between the text and vector query components of the search query for this document. Each vector query is shown as a separate object in the same order they were received."
+    },
+    "TextResult": {
+      "type": "object",
+      "properties": {
+        "searchScore": {
+          "type": "number",
+          "format": "double",
+          "readOnly": true,
+          "description": "The BM25 or Classic score for the text portion of the query."
+        }
+      },
+      "readOnly": true,
+      "description": "The BM25 or Classic score for the text portion of the query."
+    },
+    "QueryResultDocumentVectorSubscores": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/SingleVectorFieldResult",
+        "readOnly": true
+      },
+      "readOnly": true,
+      "description": "The vector similarity and @search.score values for each vector query. Each cross-field vector query will have separate subscores for each referenced field."
+    },
+    "SingleVectorFieldResult": {
+      "type": "object",
+      "properties": {
+        "searchScore": {
+          "type": "number",
+          "format": "double",
+          "readOnly": true,
+          "description": "The @search.score value that is calculated from the vector similarity score. This is the score that's visible in a pure single-field single-vector query."
+        },
+        "vectorSimilarity": {
+          "type": "number",
+          "format": "double",
+          "readOnly": true,
+          "description": "The vector similarity score for this document. Note this is the canonical definition of similarity metric, not the 'distance' version. For example, cosine similarity instead of cosine distance."
+        }
+      },
+      "readOnly": true,
+      "description": "A single vector field result. Both @search.score and vector similarity values are returned. Vector similarity is related to @search.score by an equation."
     }
   },
   "parameters": {
